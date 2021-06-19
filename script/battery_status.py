@@ -20,7 +20,7 @@ class BatteryNotifier:
             if battery.percent >= self.settings['maxbattery_percentage'] and battery.power_plugged:
                 self.toaster.show_toast("Battery Percentage " + str(battery.percent))
                 self.twilio_notifier(battery.percent)
-            elif battery.percent >= self.settings['maxbattery_percentage'] and not battery.power_plugged:
+            elif not battery.power_plugged:
                 exit(0)
             time.sleep(10)
 
