@@ -1,0 +1,7 @@
+{
+  "maxbattery_percentage": 80,
+  "authtoken": "<authtoken>",
+  "account_sid": "<account_sid>",
+  "twilio_phone": "<twilio_number>",
+  "self_phone": "<slelf_whatsappnumber>"
+}
