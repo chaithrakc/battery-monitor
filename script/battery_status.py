@@ -18,12 +18,16 @@ class BatteryNotifier:
         while True:
             battery = psutil.sensors_battery()
             if battery.percent >= self.settings['maxbattery_percentage'] and battery.power_plugged:
-                self.toaster.show_toast("Battery Percentage " + str(battery.percent))
-                self.twilio_notifier(battery.percent)
+                self.send_notification(battery)
             elif not battery.power_plugged:
                 exit(0)
             time.sleep(10)
 
-    def twilio_notifier(self, battery_percent: int):
-        msg_body = "Battery Percentage " + str(battery_percent)
-        self.client.messages.create(from_=self.settings['twilio_phone'], to=self.settings['self_phone'], body=msg_body)
+    def send_notification(self, battery):
+        msg_body = "Battery Percentage (plugged in) : " + str(battery.percent)
+        iconpath = os.path.join('..', 'resources', 'battery-charging.ico')
+        toast_success = self.toaster.show_toast('Battery ' + str(battery.percent) + '% (plugged in)', 'Disconnect', iconpath)
+        # if notification is not displayed, send a WhatsApp notification
+        if not toast_success:
+            self.client.messages.create(from_=self.settings['twilio_phone'], to=self.settings['self_phone'],
+                                        body=msg_body)
