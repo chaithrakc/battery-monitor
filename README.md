@@ -1,6 +1,9 @@
 ## Battery Monitor
  Monitors the battery of the system when plugged in. It will notify when the battery exceeds a certain percentage through WhatsApp and desktop notification.
  
+ ## Requirements
+ Sending Whatsapp messages requires a Twilio account. Follow this [tutorial](https://www.twilio.com/docs/whatsapp/quickstart/python#sign-up-for-twilio-and-activate-the-sandbox) to create a Whatsapp channel using Twilio.
+ 
  ## How to use?
  1. Modify `resources/settings.json` with your settings
  2. `pip install -r requirements.txt` to install all the required libraries
