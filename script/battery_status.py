@@ -21,13 +21,15 @@ class BatteryNotifier:
                 self.send_notification(battery)
             elif not battery.power_plugged:
                 exit(0)
-            time.sleep(10)
+            time.sleep(15)
 
     def send_notification(self, battery):
-        msg_body = "Battery Percentage (plugged in) : " + str(battery.percent)
+        msg = 'Battery ' + str(battery.percent) + '% (plugged in)'
         iconpath = os.path.join('..', 'resources', 'battery-charging.ico')
-        toast_success = self.toaster.show_toast('Battery ' + str(battery.percent) + '% (plugged in)', 'disconnect!', iconpath)
-        # if notification is not displayed, send a WhatsApp notification
-        if not toast_success:
-            self.client.messages.create(from_=self.settings['twilio_phone'], to=self.settings['self_phone'],
-                                        body=msg_body)
+        self.toaster.show_toast(msg, 'disconnect!', iconpath)
+        self.client.messages.create(from_=self.settings['twilio_phone'], to=self.settings['self_phone'], body=msg)
+
+
+if __name__ == '__main__':
+    batteryNotifier = BatteryNotifier()
+    batteryNotifier.notify_status()
